@@ -1,24 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Device &amp; Controls | Industrial Automation Solutions</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f6f8fb;
+      color: #1a1a2e;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES — Dark Navy + Orange theme
+    ═══════════════════════════════════════════ */
+    :root {
+      --navy:   #0d1b2e;
+      --navy2:  #1a2e4a;
+      --orange: #f5a623;
+      --orange2:#e8950e;
+      --light:  #eef3f9;
+      --white:  #ffffff;
+      --text:   #2d3748;
+      --muted:  #6b7280;
+      --border: #e2e8f0;
+      --shadow: 0 4px 24px rgba(13,27,46,0.14);
+      --radius: 12px;
+    }
+
+    /* ═══════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo img {
+      height: 52px;
+      width: auto;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+    .nav-logo-text {
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+    .nav-links > li > a,
+    .nav-links > li > button.mega-trigger-btn {
+      color: rgba(255,255,255,0.82);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+    }
+    .nav-links > li > a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform 0.18s;
+    }
+    .nav-links > li > a:hover,
+    .nav-links > li.mega-open > a,
+    .nav-links > li.mega-open > button.mega-trigger-btn { color: #fff; }
+    .nav-links > li > a:hover::after,
+    .nav-links > li.mega-open > a::after { transform: scaleX(1); }
+
+    /* chevron icon in Products link */
+    .nav-links .mega-parent > button.mega-trigger-btn svg {
+      width: 12px; height: 12px; flex-shrink: 0;
+      transition: transform 0.22s;
+    }
+    .nav-links .mega-parent.mega-open > button.mega-trigger-btn svg {
+      transform: rotate(180deg);
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      padding: 4px;
+    }
+    .nav-hamburger svg { width: 26px; height: 26px; }
+
+    /* ── MEGA DROPDOWN (desktop) ── */
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1080px, 96vw);
+      background: var(--navy);
+      border-top: 3px solid var(--orange);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+      z-index: 600;
+      padding: 32px 36px 36px;
+      animation: megaIn 0.2s ease both;
+    }
+    @keyframes megaIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    .mega-parent { position: static; }
+    .mega-parent.mega-open .mega-menu { display: block; }
+
+    .mega-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0 32px;
+    }
+    .mega-col {
+      border-right: 1px solid rgba(255,255,255,0.07);
+      padding-right: 24px;
+    }
+    .mega-col:last-child { border-right: none; padding-right: 0; }
+    .mega-col-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(245,166,35,0.25);
+    }
+    .mega-col ul { display: flex; flex-direction: column; gap: 2px; }
+    .mega-col ul li a {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.02em;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: background 0.14s, color 0.14s, padding-left 0.14s;
+      text-transform: none;
+    }
+    .mega-col ul li a::before {
+      content: '›';
+      margin-right: 6px;
+      color: var(--orange);
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.14s;
+    }
+    .mega-col ul li a:hover {
+      background: rgba(245,166,35,0.09);
+      color: #fff;
+      padding-left: 12px;
+    }
+    .mega-col ul li a:hover::before { opacity: 1; }
+    /* remove global a::after underline from mega items */
+    .mega-col ul li a::after { display: none !important; }
+
+    /* ── MOBILE NAVBAR ── */
+    @media (max-width: 700px) {
+      .navbar { padding: 0 18px; height: 56px; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: var(--navy);
+        padding: 16px 0 20px;
+        gap: 0;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+        z-index: 600;
+        max-height: calc(100vh - 56px);
+        overflow-y: auto;
+      }
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: flex; }
+
+      /* regular nav items on mobile */
+      .nav-links > li > a,
+      .nav-links > li > button.mega-trigger-btn {
+        padding: 13px 22px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        width: 100%;
+        text-align: left;
+        justify-content: flex-start;
+      }
+      .nav-links > li > a::after { display: none; }
+
+      /* mega menu: becomes accordion on mobile */
+      .mega-menu {
+        position: static;
+        width: 100%;
+        transform: none;
+        box-shadow: none;
+        border-top: none;
+        border-bottom: none;
+        padding: 0 0 4px;
+        animation: none;
+        background: rgba(255,255,255,0.04);
+        border-left: 3px solid var(--orange);
+        margin: 0 18px;
+        width: calc(100% - 36px);
+      }
+      .mega-parent.mega-open .mega-menu { display: block; }
+
+      .mega-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .mega-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 14px 16px;
+      }
+      .mega-col:last-child { border-bottom: none; }
+      .mega-col-title { font-size: 0.68rem; margin-bottom: 10px; }
+      .mega-col ul li a { font-size: 0.77rem; padding: 5px 6px; }
+      .mega-col ul li a:hover { padding-left: 10px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO — dark navy bg, orange accents
+    ═══════════════════════════════════════════ */
+    .hero {
+      background: var(--navy);
+      min-height: 86vh;
+      display: flex;
+      align-items: center;
+      padding: 72px 40px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 85% 50%, rgba(245,166,35,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 80%, rgba(26,46,74,0.7) 0%, transparent 60%);
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(245,166,35,0.18);
+      border: 1.5px solid rgba(245,166,35,0.55);
+      color: var(--orange);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero-desc {
+      color: rgba(255,255,255,0.72);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 36px;
+
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #0d1b2e;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 30px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.18s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border-radius: 4px;
+      border: 2px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s;
+      display: inline-block;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
+
+    .msme-badge-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: rgba(245,166,35,0.12);
+      border: 1.5px solid rgba(245,166,35,0.42);
+      color: var(--orange);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      padding: 7px 16px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      transition: background 0.18s, transform 0.15s;
+    }
+    .msme-badge-trigger:hover { background: rgba(245,166,35,0.22); transform: translateY(-1px); }
+    .msme-badge-trigger svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .msme-badge-trigger .check-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; display: inline-block; flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(74,222,128,0.7);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .hero-image-wrap { position: relative; }
+    .hero-image-wrap img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+    }
+    .hero-img-badge {
+      position: absolute;
+      bottom: -14px; left: -14px;
+      background: var(--orange);
+      color: #0d1b2e;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 4px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+      .hero-image-wrap { display: none; }
+      .hero { padding: 52px 20px 44px; min-height: auto; }
+    }
+
+    /* ═══════════════════════════════════════════
+       STATS BAR — orange bg
+    ═══════════════════════════════════════════ */
+    .stats-bar {
+      background: var(--orange);
+      padding: 22px 40px;
+    }
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      text-align: center;
+      align-items: center;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-right: 1.5px solid rgba(13,27,46,0.2);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-num sup { font-size: 0.9rem; vertical-align: super; }
+    .stat-label {
+      font-size: 0.72rem;
+      color: rgba(13,27,46,0.75);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      line-height: 1.3;
+      text-align: left;
+    }
+    @media (max-width: 640px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { padding: 18px 18px; }
+      .stat-item { border-right: none; border-bottom: 1.5px solid rgba(13,27,46,0.15); padding: 10px 0; }
+      .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       PRODUCT SLIDER
+    ═══════════════════════════════════════════ */
+    .product-slider-section {
+      background: var(--navy);
+      overflow: hidden;
+      position: relative;
+    }
+    .product-slider-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      align-items: center;
+      min-height: 420px;
+    }
+    /* Static text panel */
+    .slider-text-panel {
+      padding: 56px 44px 56px 40px;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+    .slider-text-panel .stp-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(245,166,35,0.12);
+      border: 1px solid rgba(245,166,35,0.32);
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+    .slider-text-panel h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.45rem, 2.6vw, 2rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .slider-text-panel h2 span { color: var(--orange); }
+    .slider-text-panel .stp-divider {
+      width: 48px; height: 4px;
+      background: var(--orange);
+      border-radius: 2px;
+      margin: 20px 0 0;
+    }
+    /* Dots */
+    .slider-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .slider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .slider-dot.active {
+      background: var(--orange);
+      transform: scale(1.35);
+    }
+    /* Image track */
+    .slider-image-panel {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+    }
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.72s cubic-bezier(0.77,0,0.18,1);
+      will-change: transform;
+    }
+    .slider-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      position: relative;
+    }
+    .slider-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* subtle dark fade on left edge to blend into text panel */
+    .slider-image-panel::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 80px;
+      background: linear-gradient(to right, var(--navy) 0%, transparent 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+    /* Nav arrows */
+    .slider-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 4;
+      background: rgba(13,27,46,0.72);
+      border: 1.5px solid rgba(245,166,35,0.45);
+      color: var(--orange);
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .slider-arrow:hover { background: var(--orange); color: var(--navy); border-color: var(--orange); }
+    .slider-arrow.prev { right: 52px; }
+    .slider-arrow.next { right: 8px; }
+
+    @media (max-width: 860px) {
+      .product-slider-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .slider-text-panel {
+        padding: 36px 20px 28px;
+        text-align: center;
+      }
+      .slider-text-panel .stp-divider { margin: 16px auto 0; }
+      .slider-dots { justify-content: center; }
+      .slider-image-panel {
+        height: 260px;
+      }
+      .slider-image-panel::before { display: none; }
+      .slider-arrow.prev { right: 54px; }
+      .slider-arrow.next { right: 10px; }
+    }
+    @media (max-width: 480px) {
+      .slider-image-panel { height: 210px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTION COMMONS
+    ═══════════════════════════════════════════ */
+    .section { padding: 80px 40px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange2);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-sub { font-size: 0.93rem; color: var(--muted); max-width: 520px; line-height: 1.75; }
+    @media (max-width: 640px) { .section { padding: 52px 18px; } }
+
+    /* ═══════════════════════════════════════════
+       BRANDS
+    ═══════════════════════════════════════════ */
+    #brands { background: var(--white); }
+
+    /* ═══════════════════════════════════════════
+       WHY CHOOSE US
+    ═══════════════════════════════════════════ */
+    #why { background: var(--navy); }
+    #why .section-tag { color: var(--orange); }
+    #why .section-title { color: #fff; }
+    #why .section-sub { color: rgba(255,255,255,0.62); }
+    .why-intro { max-width: 600px; margin-bottom: 48px; }
+    
+    /* 2-column layout for Why Choose Us */
+    .why-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .why-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .why-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-left: 4px solid var(--orange);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: background 0.18s, transform 0.15s;
+    }
+    .why-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
+    .why-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: var(--navy);
+    }
+    .why-card h3 { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .why-card p { font-size: 0.8rem; color: rgba(255,255,255,0.62); line-height: 1.65; }
+    
+    /* Why image column */
+    .why-image-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-image-container {
+      background: rgba(255,255,255,0.08);
+      border-radius: 1.5rem;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .why-image-container img {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 1rem;
+    }
+    @media (max-width: 900px) {
+      .why-image-col {
+        order: -1;
+      }
+      .why-image-container {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       INDUSTRIES SECTION
+    ═══════════════════════════════════════════ */
+    #industries { background: var(--navy); }
+    .industries-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      margin-top: 48px;
+      align-items: center;
+    }
+    .industries-img-frame {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.44);
+      border: 2px solid rgba(255,255,255,0.06);
+      background: var(--navy2);
+    }
+    .industries-img-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    .industries-img-tag {
+      position: absolute;
+      bottom: -18px;
+      right: -4px;
+      z-index: 2;
+      background: var(--orange);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 4px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+    }
+
+    /* ── Right: list ── */
+    .industries-list-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .industries-list-col .iws-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 6px;
+    }
+    .industries-list-col h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 28px;
+      letter-spacing: -0.01em;
+    }
+    .industries-list-col h2 span { color: var(--orange); }
+
+    .industries-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      list-style: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .industries-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.01em;
+      transition: color 0.16s;
+    }
+    .industries-list li:hover { color: #fff; }
+    .industries-list li .iws-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(245,166,35,0.6);
+    }
+
+    /* odd items get a right-side border for the 2-col grid lines */
+    .industries-list li:nth-child(odd) {
+      border-right: 1px solid rgba(255,255,255,0.07);
+      padding-right: 22px;
+    }
+    .industries-list li:nth-child(even) {
+      padding-left: 22px;
+    }
+
+    @media (max-width: 900px) {
+      .industries-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .industries-img-frame {
+        max-width: 520px;
+        margin: 0 auto;
+      }
+    }
+    @media (max-width: 560px) {
+      .industries-list {
+        grid-template-columns: 1fr;
+      }
+      .industries-list li:nth-child(odd) {
+        border-right: none;
+        padding-right: 0;
+      }
+      .industries-list li:nth-child(even) {
+        padding-left: 0;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTACT SECTION
+    ═══════════════════════════════════════════ */
+    #contact { background: var(--light); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+    .contact-form-wrap {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .contact-form-wrap h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 22px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
+    @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: 13px; }
+    .form-group label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--text); margin-bottom: 5px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.87rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(245,166,35,0.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .btn-form-submit {
+      width: 100%;
+      padding: 13px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-family: inherit;
+      transition: opacity 0.18s, transform 0.15s, background 0.18s;
+      margin-top: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-form-submit::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+      z-index: 0;
+    }
+    .btn-form-submit span { position: relative; z-index: 1; }
+    .btn-form-submit:hover::after { transform: scaleX(1); }
+    .btn-form-submit:hover { color: var(--navy); }
+
+    .contact-map-col { display: flex; flex-direction: column; gap: 14px; }
+    .contact-map-col > h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.04em; }
+    .map-frame-wrapper {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .map-frame-wrapper:hover { box-shadow: 0 8px 32px rgba(13,27,46,0.2); }
+    .map-frame-wrapper iframe { width: 100%; height: 320px; border: none; display: block; pointer-events: none; }
+    .map-click-layer {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: flex-end; justify-content: center; padding-bottom: 14px;
+      background: linear-gradient(to top, rgba(0,0,0,0.32) 0%, transparent 55%);
+      text-decoration: none;
+    }
+    .map-open-pill {
+      background: var(--white); color: var(--navy);
+      font-size: 0.76rem; font-weight: 800;
+      padding: 7px 20px; border-radius: 4px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 7px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .map-click-layer:hover .map-open-pill { background: var(--orange); color: var(--navy); }
+    .map-address-pill {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid var(--orange);
+      border-radius: 8px; padding: 13px 16px;
+      font-size: 0.82rem; color: var(--text); line-height: 1.65;
+    }
+    .map-address-pill .pin-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .contact-info-list { display: flex; flex-direction: column; gap: 10px; margin-top: 2px; }
+    .contact-info-item { display: flex; align-items: center; gap: 12px; font-size: 0.83rem; color: var(--text); }
+    .contact-info-item a { color: var(--text); transition: color 0.15s; }
+    .contact-info-item a:hover { color: var(--orange); }
+    .contact-info-item .ci-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--navy);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange); font-size: 1rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.65);
+      padding: 56px 40px 28px;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 22px;
+    }
+    .footer-brand h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem; font-weight: 900; color: #fff;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.72; max-width: 320px; }
+    .footer-brand .f-msme { margin-top: 16px; }
+    .footer-col h4 {
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 14px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul li a { font-size: 0.82rem; color: rgba(255,255,255,0.62); transition: color 0.15s; }
+    .footer-col ul li a:hover { color: var(--orange); }
+    .footer-bottom {
+      display: flex; 
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center;
+      gap: 12px;
+      font-size: 0.74rem; 
+      color: rgba(255,255,255,0.38);
+      text-align: center;
+    }
+    .footer-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      width: 100%;
+    }
+    .footer-attribution {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      margin-top: 8px;
+    }
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr; gap: 26px; }
+      footer { padding: 40px 18px 24px; }
+      .footer-bottom-row {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .msme-badge-sm {
+      display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+      background: rgba(245,166,35,0.12);
+      border: 1.5px solid rgba(245,166,35,0.38);
+      color: var(--orange);
+      font-size: 0.69rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 6px 13px; border-radius: 4px; text-transform: uppercase;
+      transition: background 0.15s;
+    }
+    .msme-badge-sm:hover { background: rgba(245,166,35,0.22); }
+    .msme-badge-sm .check-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; flex-shrink: 0;
+      box-shadow: 0 0 5px rgba(74,222,128,0.6);
+    }
+
+    /* GST Badge styles (matches MSME) */
+    .gst-badge-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: rgba(245,166,35,0.12);
+      border: 1.5px solid rgba(245,166,35,0.42);
+      color: var(--orange);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      padding: 7px 16px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      transition: background 0.18s, transform 0.15s;
+      margin-top: 10px;
+    }
+    .gst-badge-trigger:hover { background: rgba(245,166,35,0.22); transform: translateY(-1px); }
+    .gst-badge-trigger svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .gst-badge-trigger .check-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; display: inline-block; flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(74,222,128,0.7);
+      animation: pulse-dot 2s infinite;
+    }
+    .gst-badge-sm {
+      display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+      background: rgba(245,166,35,0.12);
+      border: 1.5px solid rgba(245,166,35,0.38);
+      color: var(--orange);
+      font-size: 0.69rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 6px 13px; border-radius: 4px; text-transform: uppercase;
+      transition: background 0.15s;
+      margin-top: 8px;
+    }
+    .gst-badge-sm:hover { background: rgba(245,166,35,0.22); }
+    .gst-badge-sm .check-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; flex-shrink: 0;
+      box-shadow: 0 0 5px rgba(74,222,128,0.6);
+    }
+
+    /* GST MODAL */
+    #gstOverlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(6px);
+      z-index: 9900;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    #gstOverlay.open { display: flex; }
+    #gstModal {
+      position: relative;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 32px 96px rgba(0,0,0,0.55);
+      width: min(740px, 100%);
+      max-height: 94vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: modalIn 0.26s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    .gst-modal-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      border-bottom: 3px solid var(--orange);
+    }
+    .gst-modal-hd-text h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .gst-modal-hd-text p {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
+    }
+    .gst-close-btn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .gst-close-btn:hover { background: rgba(255,255,255,0.2); }
+    .gst-scroll {
+      flex: 1 1 auto;
+      overflow: auto;
+      padding: 20px;
+      background: #f4f6f9;
+    }
+    .gst-zoom-wrap {
+      transform-origin: top center;
+      transition: transform 0.2s ease;
+    }
+    .gst-cert-container {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 24px;
+      max-width: 650px;
+      margin: 0 auto;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .gst-cert-header {
+      text-align: center;
+      border-bottom: 2px solid #1a5276;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+    .gst-cert-header .gst-logo {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .gst-cert-header h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #1a5276;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .gst-cert-header p {
+      font-size: 0.75rem;
+      color: #555;
+    }
+    .gst-cert-title {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #c0392b;
+      margin: 16px 0;
+      text-transform: uppercase;
+    }
+    .gst-cert-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .gst-cert-table tr {
+      border-bottom: 1px solid #eee;
+    }
+    .gst-cert-table td {
+      padding: 10px 8px;
+      vertical-align: top;
+    }
+    .gst-cert-table .lbl {
+      font-weight: 600;
+      color: #333;
+      width: 40%;
+      background: #f9f9f9;
+    }
+    .gst-cert-table .val {
+      color: #1a1a2e;
+    }
+    .gst-cert-table .val strong {
+      color: #1a5276;
+    }
+    .gst-priv {
+      filter: blur(4px);
+      user-select: none;
+      pointer-events: none;
+    }
+    .gst-cert-footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #ddd;
+      font-size: 0.7rem;
+      color: #666;
+      text-align: center;
+    }
+    .gst-disclaimer {
+      background: var(--light);
+      padding: 10px 16px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .gst-zoom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .gst-zoom-bar .zoom-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .gst-zoom-bar .zoom-btn:hover { background: rgba(255,255,255,0.2); }
+    .gst-zoom-bar #gstZoomLabel {
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 0.8rem;
+      min-width: 50px;
+      text-align: center;
+    }
+    .gst-zoom-bar .zoom-reset {
+      background: var(--orange);
+      color: var(--navy);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.15s;
+    }
+    .gst-zoom-bar .zoom-reset:hover { opacity: 0.85; }
+    @media (max-width: 600px) {
+      .gst-cert-container { padding: 16px; }
+      .gst-cert-table .lbl { width: 35%; font-size: 0.72rem; }
+      .gst-cert-table .val { font-size: 0.72rem; }
+    }
+
+    /* Floating Action Buttons */
+    .fab-stack {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .fab-btn {
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .fab-btn:hover { transform: translateY(-2px); }
+    .fab-btn svg { width: 20px; height: 20px; }
+
+    /* Phone FAB */
+    .phone-fab {
+      background: var(--navy);
+      box-shadow: 0 6px 24px rgba(13,27,46,0.42);
+    }
+    .phone-fab:hover { box-shadow: 0 10px 32px rgba(13,27,46,0.52); }
+
+    /* Email FAB */
+    .email-fab {
+      background: #ea4335;
+      box-shadow: 0 6px 24px rgba(234,67,53,0.42);
+    }
+    .email-fab:hover { box-shadow: 0 10px 32px rgba(234,67,53,0.52); }
+
+    /* WhatsApp FAB */
+    .whatsapp-fab {
+      background: #25d366;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.42);
+    }
+    .whatsapp-fab:hover { box-shadow: 0 10px 32px rgba(37,211,102,0.52); }
+
+    @media (max-width: 500px) {
+      .fab-btn { padding: 12px; border-radius: 50%; }
+      .fab-btn span { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       MSME MODAL — Real Certificate
+    ═══════════════════════════════════════════ */
+    #msmeOverlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(6px);
+      z-index: 9900;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    #msmeOverlay.open { display: flex; }
+    #msmeModal {
+      position: relative;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 32px 96px rgba(0,0,0,0.55);
+      width: min(740px, 100%);
+      max-height: 94vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: modalIn 0.26s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.88) translateY(24px); }
+      to   { opacity: 1; transform: scale(1)    translateY(0); }
+    }
+    .msme-modal-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 22px;
+      background: var(--navy);
+      color: #fff; flex-shrink: 0;
+      border-bottom: 3px solid var(--orange);
+    }
+    .msme-modal-hd-text h2 { margin: 0; font-size: 0.9rem; font-weight: 900; letter-spacing: 0.06em; line-height: 1.3; text-transform: uppercase; }
+    .msme-modal-hd-text p { margin: 3px 0 0; font-size: 0.66rem; opacity: 0.7; }
+    .msme-close-btn {
+      background: rgba(255,255,255,0.14); border: none; color: #fff;
+      border-radius: 50%; width: 34px; height: 34px; cursor: pointer;
+      font-size: 1.25rem; line-height: 34px; text-align: center;
+      transition: background 0.15s; flex-shrink: 0;
+    }
+    .msme-close-btn:hover { background: rgba(255,255,255,0.28); }
+    .msme-scroll { overflow-y: auto; flex: 1; }
+
+    /* ── Certificate document — faithful to real GOI cert ── */
+    .msme-zoom-wrap {
+      transform-origin: top center;
+      transition: transform 0.2s ease;
+      padding: 28px 32px 36px;
+    }
+    @media (max-width: 500px) { .msme-zoom-wrap { padding: 16px 14px 24px; } }
+
+    .cert-doc {
+      font-family: 'Times New Roman', Georgia, serif;
+      color: #111;
+      max-width: 660px;
+      margin: 0 auto;
+      border: 2px solid #1a3c5e;
+      padding: 28px 30px;
+      background: #fff;
+    }
+    @media (max-width: 500px) { .cert-doc { padding: 16px 12px; } }
+
+    /* Top header row */
+    .cert-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .cert-header .emblem-side {
+      font-size: 3.2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .cert-header-center {
+      text-align: center;
+      flex: 1;
+    }
+    .cert-header-center .hindi { font-size: 0.85rem; font-weight: 700; color: #1a1a1a; line-height: 1.4; }
+    .cert-header-center .eng  { font-size: 0.82rem; font-weight: 700; color: #1a1a1a; line-height: 1.4; }
+    .cert-header-center .ministry { font-size: 0.72rem; color: #333; margin-top: 3px; }
+    .cert-header .msme-logo-side {
+      font-size: 0.55rem; font-weight: 900; color: #1a3c5e;
+      text-align: center; line-height: 1.2;
+      border: 2px solid #1a3c5e;
+      padding: 4px 6px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      letter-spacing: 0.04em;
+    }
+    .cert-divider {
+      border: none;
+      border-top: 2px solid #1a3c5e;
+      margin: 10px 0;
+    }
+    .cert-title {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #000;
+      margin: 12px 0 18px;
+      border-bottom: 1.5px solid #999;
+      padding-bottom: 12px;
+    }
+
+    /* Table rows */
+    .cert-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .cert-table tr td {
+      padding: 7px 10px;
+      vertical-align: top;
+      border: 1px solid #ccc;
+    }
+    .cert-table .lbl {
+      font-weight: 700;
+      color: #111;
+      width: 38%;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: #f5f7fa;
+    }
+    .cert-table .val { color: #111; background: #fff; }
+
+    /* Highlight row (TRADING) */
+    .cert-highlight {
+      background: #1a3c5e !important;
+      color: #fff !important;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+    }
+    .cert-highlight-sub {
+      background: #1a3c5e !important;
+      color: #fff !important;
+      text-align: center;
+      font-size: 0.72rem;
+      font-style: italic;
+    }
+
+    /* Inner sub-table */
+    .cert-inner-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .cert-inner-table th {
+      background: #1a3c5e; color: #fff;
+      padding: 5px 8px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .cert-inner-table td {
+      padding: 5px 8px;
+      border: 1px solid #ddd;
+      background: #fafbfc;
+    }
+    .cert-inner-table tr:nth-child(even) td { background: #fff; }
+
+    /* Address inner table tweak */
+    .cert-inner-table td:first-child { font-weight: 600; color: #333; width: 22%; font-size: 0.7rem; }
+
+    /* Footer note */
+    .cert-footer-note {
+      margin-top: 18px;
+      font-size: 0.72rem;
+      color: #444;
+      line-height: 1.55;
+      border-top: 1.5px dashed #aaa;
+      padding-top: 14px;
+    }
+    .cert-footer-note a { color: #1a3c5e; }
+
+    /* Contact box */
+    .cert-contact-box {
+      margin-top: 18px;
+      background: #f3f6fa;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 0.75rem;
+      color: #333;
+    }
+    .cert-contact-box .cc-row { display: flex; gap: 6px; margin-top: 6px; }
+    .cert-contact-box .cc-label { font-weight: 700; min-width: 18px; }
+
+    /* Privacy blur on personal mobile/email */
+    .priv { filter: blur(4px); user-select: none; pointer-events: none; }
+
+    /* Disclaimer strip */
+    .msme-disclaimer {
+      background: var(--light);
+      padding: 10px 16px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Zoom bar */
+    .msme-zoom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .msme-zoom-bar .zoom-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .msme-zoom-bar .zoom-btn:hover { background: rgba(255,255,255,0.2); }
+    .msme-zoom-bar #zoomLabel {
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 0.8rem;
+      min-width: 50px;
+      text-align: center;
+    }
+    .msme-zoom-bar .zoom-reset {
+      background: var(--orange);
+      color: var(--navy);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.15s;
+    }
+    .msme-zoom-bar .zoom-reset:hover { opacity: 0.85; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="device control logo.jpeg" alt="Device &amp; Controls Logo" onerror="this.style.display='none'" />
+      <div class="nav-logo-text">Device &amp; Controls</div>
+    </div>
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" onclick="closeNav()">Home</a></li>
 
       <!-- ── MEGA DROPDOWN ── -->
       <li class="mega-parent" id="megaParent">
-        <a href="#brands" onclick="toggleMega(event)" aria-haspopup="true" aria-expanded="false" id="megaTrigger">
+        <button type="button" class="mega-trigger-btn" onclick="toggleMega(event)" aria-haspopup="true" aria-expanded="false" id="megaTrigger">
           Products
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
-      </li>
-      <!-- ── end MEGA DROPDOWN ── -->
+        </button>
 
-      <li><a href="#contact" onclick="closeNav()">Contact</a></li>
-    </ul>
-  </nav>
+        <div class="mega-menu" id="megaMenu" role="menu">
+          <div class="mega-grid">
 
-      <!-- ── MEGA DROPDOWN ── -->
-      <li class="mega-parent" id="megaParent">
-        <a href="#products" onclick="toggleMega(event)" aria-haspopup="true" aria-expanded="false" id="megaTrigger">
-          Products
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
+            <!-- Col 1 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Automation &amp; Networking</div>
+              <ul>
+                <li><a href="#brands" onclick="closeMegaAndNav()">PLC &amp; HMI</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">PLCC &amp; Industrial PC</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Ethernet Switches</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Media Converters &amp; LIU Boxes</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Profibus (Cables, Connectors, Repeaters, Gateways)</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 2 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Power, Switching &amp; Control</div>
+              <ul>
+                <li><a href="#brands" onclick="closeMegaAndNav()">SMPS (Power Supplies)</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Switchgears &amp; Thyristors</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Relays (General, Board, SSR, ELR)</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Electronic Timers</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Safety Barriers</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 3 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Motion &amp; Measurement</div>
+              <ul>
+                <li><a href="#brands" onclick="closeMegaAndNav()">VFDs &amp; Electric Motors</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Servo Motors &amp; Drives</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Encoders</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Sensors (Proximity, Photoelectric, Limit)</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Temperature &amp; Pressure Gauges/Transmitters</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 4 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Mechanical &amp; Hardware</div>
+              <ul>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Bearings</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Linear Guideways &amp; Ballscrews</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Solenoid Coils &amp; Valves</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Tower Lights &amp; Panel Indicators</a></li>
+                <li><a href="#brands" onclick="closeMegaAndNav()">Cable Lugs &amp; Hardware</a></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
       </li>
       <!-- ── end MEGA DROPDOWN ── -->
 
@@ -28,3 +1696,877 @@
       <li><a href="#contact" onclick="closeNav()">Contact</a></li>
     </ul>
   </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Trusted Industrial Automation Partner</div>
+        <h1>Trusted Supplier of<br><span>PLC, VFD, SMPS</span><br>&amp; Control Solutions</h1>
+        <p class="hero-desc">
+          Device &amp; Controls is your one-stop supplier of genuine industrial automation products —
+          VFDs, PLCs, sensors, and more — from the world's most trusted brands,
+          delivered fast across India.
+        </p>
+        <div class="hero-ctas">
+          <button type="button" class="btn-primary" onclick="openMegaFromHero()">Explore Products</button>
+          <a href="#contact" class="btn-outline">Get a Quote</a>
+        </div>
+        <button class="msme-badge-trigger" onclick="openMSMEModal()" aria-label="View MSME Certificate">
+          <span class="check-dot"></span>
+          MSME Registered · View Certificate
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+          </svg>
+        </button>
+        <button class="gst-badge-trigger" onclick="openGSTModal()" aria-label="View GST Certificate">
+          <span class="check-dot"></span>
+          GST Registered · View Certificate
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+          </svg>
+        </button>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STATS BAR
+  ═══════════════════════════════════════════ -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">20<sup>+</sup></div>
+        <div class="stat-label">Brand<br>Partners</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5K<sup>+</sup></div>
+        <div class="stat-label">Products<br>in Stock</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24<sup>h</sup></div>
+        <div class="stat-label">Quote<br>Turnaround</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" style="font-size:1.5rem;">PAN</div>
+        <div class="stat-label">India<br>Delivery</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PRODUCT SLIDER
+  ═══════════════════════════════════════════ -->
+  <div class="product-slider-section" id="products">
+    <div class="product-slider-inner">
+
+      <!-- Static text panel — never moves -->
+      <div class="slider-text-panel">
+        <div class="stp-tag">Our Product Range</div>
+        <h2>From PLCs to<br>Power Supplies —<br><span>Complete Automation</span><br>Solutions Under<br>One Roof</h2>
+        <div class="stp-divider"></div>
+        <div class="slider-dots" id="sliderDots">
+          <button class="slider-dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+          <button class="slider-dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+          <button class="slider-dot" onclick="goToSlide(2)" aria-label="Slide 3"></button>
+        </div>
+      </div>
+
+      <!-- Sliding image panel -->
+      <div class="slider-image-panel">
+        <div class="slider-track" id="sliderTrack">
+          <div class="slider-slide">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="Industrial automation equipment" />
+          </div>
+          <div class="slider-slide">
+            <img src="https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&q=80" alt="Control panel" />
+          </div>
+          <div class="slider-slide">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&q=80" alt="Manufacturing automation" />
+          </div>
+        </div>
+        <button class="slider-arrow prev" onclick="prevSlide()" aria-label="Previous">&#8592;</button>
+        <button class="slider-arrow next" onclick="nextSlide()" aria-label="Next">&#8594;</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       OUR BRANDS
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="brands">
+    <div class="section-inner">
+      <div class="section-tag">Trusted Partners</div>
+      <div class="section-title">Our Brands</div>
+      <div class="section-sub">We partner with 20+ globally recognised brands across the automation spectrum.</div>
+      
+      <div style="margin-top: 40px; display: flex; justify-content: center; align-items: center;">
+        <img src="https://raw.githubusercontent.com/ahmedmousam136-ai/nilanjan/main/our%20brands.jpg" alt="Our Brands" style="width: 100%; max-width: 1000px; height: auto; object-fit: contain; border-radius: 12px; box-shadow: var(--shadow);">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       WHY CHOOSE US
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="why">
+    <div class="section-inner">
+      <div class="section-tag">Our Advantage</div>
+      <div class="section-title">Why Choose Us</div>
+      
+      <div class="why-layout">
+        <!-- Left column: Text and cards -->
+        <div class="why-content-col">
+          <div class="why-intro">
+            <p class="section-sub">
+              At Device and Controls, we combine technical expertise, reliable product sourcing, and fast customer
+              support to deliver dependable industrial automation solutions. We are committed to supplying genuine
+              products, competitive pricing, and quick response services for industries, OEMs, panel builders, and
+              automation professionals.
+            </p>
+          </div>
+
+          <div class="why-grid">
+            <div class="why-card">
+              <div class="why-icon">✔</div>
+              <div>
+                <h3>Genuine Products</h3>
+                <p>Every product we supply is 100% authentic, sourced directly from authorised distributors.</p>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">⚡</div>
+              <div>
+                <h3>Fast Quotation Support</h3>
+                <p>Get a detailed quote within 24 hours — even for complex multi-brand requirements.</p>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">🏭</div>
+              <div>
+                <h3>Trusted Automation Brands</h3>
+                <p>We partner with 20+ globally recognised brands across the automation spectrum.</p>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">📦</div>
+              <div>
+                <h3>Ready Stock Availability</h3>
+                <p>Most popular SKUs are stocked locally for same-day or next-day dispatch.</p>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">🛠</div>
+              <div>
+                <h3>Technical Assistance</h3>
+                <p>Our team provides pre-sales and post-sales technical support to ensure perfect product fit.</p>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">🚚</div>
+              <div>
+                <h3>Quick Dispatch Across India</h3>
+                <p>PAN India delivery with reliable logistics partners — your order moves fast.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right column: Product image -->
+        <div class="why-image-col">
+          <div class="why-image-container">
+            <img src="/images/sensors.png" alt="Industrial Automation Sensors - Proximity sensors and industrial controls" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       INDUSTRIES WE SERVE
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="industries">
+    <div class="section-inner">
+      <div class="section-tag">Who We Serve</div>
+      <div class="section-title" style="color:#fff;">Industries We <span style="color:var(--orange);">Serve</span></div>
+      <div class="section-sub" style="color:rgba(255,255,255,0.62);">From heavy manufacturing to precision OEM builders — we supply the automation products that keep your operations running.</div>
+
+      <div class="industries-layout">
+
+        <!-- Left: image -->
+        <div class="industries-img-frame">
+          <img
+            src="https://raw.githubusercontent.com/deviceandcontrols/deviceandcontrols/main/relay.png"
+            alt="Industrial Relay & Control Equipment"
+            onerror="this.onerror=null;this.src='relay.png';"
+          />
+          <div class="industries-img-tag">Industrial-Grade Equipment</div>
+        </div>
+
+        <!-- Right: industry list -->
+        <div class="industries-list-col">
+          <div class="iws-eyebrow">Sectors We Support</div>
+          <h2>Powering India's <span>Core Industries</span></h2>
+
+          <ul class="industries-list">
+            <li><span class="iws-dot"></span>Steel &amp; Metal Industries</li>
+            <li><span class="iws-dot"></span>Rolling Mills</li>
+            <li><span class="iws-dot"></span>Foundries &amp; Casting Plants</li>
+            <li><span class="iws-dot"></span>Mining Industries</li>
+            <li><span class="iws-dot"></span>Oil &amp; Gas Industries</li>
+            <li><span class="iws-dot"></span>Petrochemical Plants</li>
+            <li><span class="iws-dot"></span>Packaging Industries</li>
+            <li><span class="iws-dot"></span>Food Processing Plants</li>
+            <li><span class="iws-dot"></span>Water Treatment Plants</li>
+            <li><span class="iws-dot"></span>OEM Machine Builders</li>
+            <li><span class="iws-dot"></span>Panel Builders</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="contact">
+    <div class="section-inner">
+      <div class="section-tag">Reach Out</div>
+      <div class="section-title">Contact Us</div>
+      <div class="section-sub">Fill the form for a quotation, or navigate to our office directly.</div>
+
+      <div class="contact-grid">
+
+        <!-- LEFT: Quote Form -->
+        <div class="contact-form-wrap">
+          <h3>✉️ Request a Quote</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" placeholder="e.g. Rahul Sharma" />
+            </div>
+            <div class="form-group">
+              <label>Company</label>
+              <input type="text" placeholder="e.g. ABC Industries" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="+91 XXXXX XXXXX" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Product / Category</label>
+            <select>
+              <option value="">— Select a category —</option>
+              <option>PLC Systems</option>
+              <option>Variable Frequency Drives (VFD)</option>
+              <option>SMPS / Power Supply</option>
+              <option>Industrial Sensors</option>
+              <option>Controllers &amp; Timers</option>
+              <option>Other / Multiple</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message / Requirement</label>
+            <textarea placeholder="Describe your requirement, quantity, brand preference, or any other details…"></textarea>
+          </div>
+          <button class="btn-form-submit" type="button"><span>Send Enquiry →</span></button>
+        </div>
+
+        <!-- RIGHT: Map -->
+        <div class="contact-map-col">
+          <h3>📍 Find Our Office</h3>
+
+          <div class="map-frame-wrapper">
+            <iframe
+              src="https://maps.google.com/maps?q=160+Jodhpur+Gardens+Kolkata+700045&output=embed"
+              title="Device and Controls — 160 Jodhpur Gardens, Kolkata"
+              loading="lazy"
+              allowfullscreen
+            ></iframe>
+            <a class="map-click-layer"
+               href="https://share.google/PXvCmoj5B6xpb5S3B"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Open directions in Google Maps">
+              <span class="map-open-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+                Open in Google Maps
+              </span>
+            </a>
+          </div>
+
+          <div class="map-address-pill">
+            <span class="pin-icon">📌</span>
+            <span>
+              <strong>Device &amp; Controls</strong><br />
+              160, Jodhpur Gardens,<br />
+              Kolkata, West Bengal — 700 045<br />
+              <em style="font-size:0.74rem;color:#888;">Click the map to open directions</em>
+            </span>
+          </div>
+
+          <div class="contact-info-list">
+            <div class="contact-info-item">
+              <div class="ci-icon">📞</div>
+              <a href="tel:+919147745287">+91 91477 45287</a> / <a href="tel:+918240707385">+91 82407 07385</a> / <a href="tel:+919331807898">+91 93318 07898</a>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">✉</div>
+              <a href="mailto:deviceandcontrols@gmail.com">deviceandcontrols@gmail.com</a>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">🚚</div>
+              <span>PAN India Delivery Available</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h2>Device &amp; Controls</h2>
+          <p>Your trusted partner for genuine industrial automation products. We supply VFDs, PLCs, sensors, controllers, and more from the world's top brands — delivered fast across India.</p>
+          <div class="f-msme">
+            <button class="msme-badge-sm" onclick="openMSMEModal()" aria-label="View MSME Certificate">
+              <span class="check-dot"></span>
+              MSME Registered · UDYAM-WB-10-0168223
+            </button>
+            <button class="gst-badge-sm" onclick="openGSTModal()" aria-label="View GST Certificate">
+              <span class="check-dot"></span>
+              GST Registered · View Certificate
+            </button>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#brands">Our Brands</a></li>
+            <li><a href="#why">Why Choose Us</a></li>
+            <li><a href="#contact">Get a Quote</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><a href="tel:+919147745287">+91 91477 45287</a> / <a href="tel:+918240707385">+91 82407 07385</a> / <a href="tel:+919331807898">+91 93318 07898</a></li>
+            <li><a href="mailto:deviceandcontrols@gmail.com">deviceandcontrols@gmail.com</a></li>
+            <li><a href="https://share.google/PXvCmoj5B6xpb5S3B" target="_blank" rel="noopener">160, Jodhpur Gardens, Kolkata 700045</a></li>
+            <li><a href="#">India — PAN India Delivery</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-row">
+          <span>© 2025 Device &amp; Controls. All rights reserved.</span>
+          <span>Industrial Automation | Genuine Products | Fast Dispatch</span>
+        </div>
+        <div class="footer-attribution">
+          Co-powered by KwantumPixel
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Action Buttons Stack -->
+  <div class="fab-stack">
+    <!-- Phone FAB -->
+    <a class="fab-btn phone-fab"
+       href="tel:+919147745287"
+       aria-label="Call us">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+      <span>Call Us</span>
+    </a>
+
+    <!-- Email FAB -->
+    <a class="fab-btn email-fab"
+       href="mailto:deviceandcontrols@gmail.com?subject=Enquiry%20from%20Website"
+       aria-label="Email us">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      <span>Email Us</span>
+    </a>
+
+    <!-- WhatsApp FAB -->
+    <a class="fab-btn whatsapp-fab"
+       href="https://wa.me/919147745287?text=Hello%20Device%20%26%20Controls!%20I%20need%20a%20quotation%20for%20industrial%20automation%20products."
+       target="_blank" 
+       rel="noopener noreferrer" 
+       aria-label="Chat on WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span>Chat on WhatsApp</span>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MSME MODAL — REAL GOI CERTIFICATE
+  ═══════════════════════════════════════════ -->
+  <div id="msmeOverlay" role="dialog" aria-modal="true" aria-label="MSME Registration Certificate" onclick="handleOverlayClick(event)">
+    <div id="msmeModal">
+
+      <!-- Header -->
+      <div class="msme-modal-hd">
+        <div class="msme-modal-hd-text">
+          <h2>Udyam Registration Certificate</h2>
+          <p>Ministry of Micro, Small &amp; Medium Enterprises · Government of India</p>
+        </div>
+        <button class="msme-close-btn" onclick="closeMSMEModal()" aria-label="Close">&times;</button>
+      </div>
+
+      <!-- Scrollable certificate -->
+      <div class="msme-scroll">
+        <div class="msme-zoom-wrap" id="msmeZoomWrap">
+
+          <div class="cert-doc">
+
+            <!-- GOI Header -->
+            <div class="cert-header">
+              <div class="emblem-side">🏛️</div>
+              <div class="cert-header-center">
+                <div class="hindi">भारत सरकार</div>
+                <div class="eng">Government of India</div>
+                <div class="ministry">सूक्ष्म, लघु एवं मध्यम उद्यम मंत्रालय<br>Ministry of Micro, Small and Medium Enterprises</div>
+              </div>
+              <div class="msme-logo-side">सूक्ष्म<br>लघु एवं<br>मध्यम<br>उद्यम<br>MSME</div>
+            </div>
+            <hr class="cert-divider">
+
+            <div class="cert-title">Udyam Registration Certificate</div>
+
+            <table class="cert-table">
+              <tr>
+                <td class="lbl">Udyam Registration Number</td>
+                <td class="val"><strong>UDYAM-WB-10-0168223</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Name of Enterprise</td>
+                <td class="val"><strong>DEVICE AND CONTROLS</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Type of Enterprise *</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <thead>
+                      <tr>
+                        <th>S.No.</th>
+                        <th>Classification Year</th>
+                        <th>Enterprise Type</th>
+                        <th>Classification Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>2025-26</td>
+                        <td><strong>Micro</strong></td>
+                        <td>08/07/2025</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Major Activity</td>
+                <td class="val cert-highlight"><strong>TRADING</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl"></td>
+                <td class="val cert-highlight-sub">[For availing benefits of Priority Sector Lending (PSL) ONLY]</td>
+              </tr>
+              <tr>
+                <td class="lbl">Social Category of Entrepreneur</td>
+                <td class="val">GENERAL</td>
+              </tr>
+              <tr>
+                <td class="lbl">Name of Unit(s)</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <thead><tr><th>S.No.</th><th>Name of Unit(s)</th></tr></thead>
+                    <tbody><tr><td>1</td><td>DEVICE AND CONTROLS</td></tr></tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Official Address of Enterprise</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <tbody>
+                      <tr><td><strong>Flat/Door/Block No.</strong></td><td>160</td><td><strong>Name of Premises/Building</strong></td><td>JODHPUR GARDENS</td></tr>
+                      <tr><td><strong>Village/Town</strong></td><td>KOLKATA</td><td><strong>Block</strong></td><td>0</td></tr>
+                      <tr><td><strong>Road/Street/Lane</strong></td><td>JODHPUR GARDENS</td><td><strong>City</strong></td><td>KOLKATA</td></tr>
+                      <tr><td><strong>State</strong></td><td>WEST BENGAL</td><td><strong>District</strong></td><td>KOLKATA, Pin 700045</td></tr>
+                      <tr>
+                        <td><strong>Mobile</strong></td>
+                        <td><span class="priv">8240707385</span></td>
+                        <td><strong>Email</strong></td>
+                        <td><span class="priv">NILANJANDUTTA441@GMAIL.COM</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Incorporation / Registration of Enterprise</td>
+                <td class="val">12/07/2021</td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Commencement of Production/Business</td>
+                <td class="val">12/07/2021</td>
+              </tr>
+              <tr>
+                <td class="lbl">National Industry Classification Code(s)</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <thead>
+                      <tr>
+                        <th>S.No.</th>
+                        <th>NIC 2 Digit</th>
+                        <th>NIC 4 Digit</th>
+                        <th>NIC 5 Digit</th>
+                        <th>Activity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>47 – Retail trade, except of motor vehicles and motorcycles</td>
+                        <td>4741 – Retail sale of computers, peripheral units, software and telecommunications equipment in specialized stores</td>
+                        <td>47414 – Retail sale of telecommunication equipment</td>
+                        <td>Trading</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Udyam Registration</td>
+                <td class="val"><strong>08/07/2025</strong></td>
+              </tr>
+            </table>
+
+            <p class="cert-footer-note">
+              * In case of graduation (upward/reverse) of status of an enterprise, the benefit of the Government Schemes will be availed as per the provisions of Notification No. S.O. 2119(E) dated 26.06.2020 issued by the M/o MSME.<br><br>
+              <em>Disclaimer: This is a computer generated statement, no signature required. Printed from <a href="https://udyamregistration.gov.in" target="_blank" rel="noopener">https://udyamregistration.gov.in</a> &amp; Date of printing:- 29/07/2025</em>
+            </p>
+
+            <div class="cert-contact-box">
+              <strong>For any assistance, you may contact:</strong>
+              <div class="cc-row"><span class="cc-label">1.</span><span>District Industries Centre: &nbsp;<strong>KOLKATA ( WEST BENGAL )</strong></span></div>
+              <div class="cc-row"><span class="cc-label">2.</span><span>MSME-DFO: &nbsp;<strong>KOLKATA ( WEST BENGAL )</strong></span></div>
+              <div style="margin-top:8px;font-size:0.68rem;color:#555;">
+                Visit: www.msme.gov.in &nbsp;|&nbsp; www.dcmsme.gov.in &nbsp;|&nbsp; www.udyamregistration.gov.in<br>
+                Follow us @minmsme
+              </div>
+            </div>
+
+          </div><!-- /.cert-doc -->
+        </div><!-- /.msme-zoom-wrap -->
+      </div><!-- /.msme-scroll -->
+
+      <!-- Disclaimer strip -->
+      <div class="msme-disclaimer">
+        Verified from <strong>udyamregistration.gov.in</strong> &nbsp;·&nbsp;
+        District Industries Centre: KOLKATA (West Bengal) &nbsp;·&nbsp; MSME-DFO: KOLKATA (West Bengal) &nbsp;·&nbsp;
+        <em>Personal contact details blurred for privacy</em>
+      </div>
+
+      <!-- Zoom controls -->
+      <div class="msme-zoom-bar">
+        <button class="zoom-btn" onclick="zoomDoc(-0.1)" aria-label="Zoom out">−</button>
+        <span id="zoomLabel">100%</span>
+        <button class="zoom-btn" onclick="zoomDoc(+0.1)" aria-label="Zoom in">+</button>
+        <button class="zoom-reset" onclick="zoomReset()">Reset</button>
+      </div>
+
+    </div><!-- /#msmeModal -->
+  </div><!-- /#msmeOverlay -->
+
+  <!-- ═══════════════════════════════════════════
+       GST MODAL — REAL GOI CERTIFICATE
+  ═══════════════════════════════════════════ -->
+  <div id="gstOverlay" role="dialog" aria-modal="true" aria-label="GST Registration Certificate" onclick="handleGSTOverlayClick(event)">
+    <div id="gstModal">
+
+      <!-- Header -->
+      <div class="gst-modal-hd">
+        <div class="gst-modal-hd-text">
+          <h2>GST Registration Certificate</h2>
+          <p>Goods and Services Tax · Government of India</p>
+        </div>
+        <button class="gst-close-btn" onclick="closeGSTModal()" aria-label="Close">&times;</button>
+      </div>
+
+      <!-- Scrollable certificate -->
+      <div class="gst-scroll">
+        <div class="gst-zoom-wrap" id="gstZoomWrap">
+          <div class="gst-cert-container">
+
+            <!-- GOI Header -->
+            <div class="gst-cert-header">
+              <div class="gst-logo">🏛️</div>
+              <h3>Goods and Services Tax</h3>
+              <p>Government of India · Form GST REG-06</p>
+              <p style="font-size:0.68rem;color:#888;margin-top:4px;">[See Rule 10(1)] · Registration Certificate (Amended)</p>
+            </div>
+
+            <div class="gst-cert-title">Registration Certificate</div>
+
+            <table class="gst-cert-table">
+              <tr>
+                <td class="lbl">Registration Number</td>
+                <td class="val"><strong>19AOBPD5561Q1ZI</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Legal Name</td>
+                <td class="val gst-priv">LALI DUTTA</td>
+              </tr>
+              <tr>
+                <td class="lbl">Trade Name</td>
+                <td class="val"><strong>M/S DEVICE & CONTROLS</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Constitution of Business</td>
+                <td class="val">Proprietorship</td>
+              </tr>
+              <tr>
+                <td class="lbl">Address of Principal Place of Business</td>
+                <td class="val">
+                  Ground Floor, 160 Jodhpur Garden,<br>
+                  Jodhpur Park, Kolkata,<br>
+                  West Bengal – 700045
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Validity</td>
+                <td class="val">From <strong>12/07/2023</strong> To <strong>Not Applicable</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Type of Registration</td>
+                <td class="val"><strong>Regular</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Issue of Certificate</td>
+                <td class="val"><strong>12/08/2023</strong></td>
+              </tr>
+            </table>
+
+            <div class="gst-cert-footer">
+              <p><em>This is a system generated digitally signed Registration Certificate issued based on the deemed approval of application on 12/08/2023.</em></p>
+              <p style="margin-top:8px;"><strong>Note:</strong> The registration certificate is required to be prominently displayed at all places of Business/Office(s) in the State.</p>
+            </div>
+
+          </div><!-- /.gst-cert-container -->
+        </div><!-- /.gst-zoom-wrap -->
+      </div><!-- /.gst-scroll -->
+
+      <!-- Disclaimer strip -->
+      <div class="gst-disclaimer">
+        Verified GST Registration &nbsp;·&nbsp; GSTIN: 19AOBPD5561Q1ZI &nbsp;·&nbsp;
+        <em>Personal details blurred for privacy</em>
+      </div>
+
+      <!-- Zoom controls -->
+      <div class="gst-zoom-bar">
+        <button class="zoom-btn" onclick="zoomGSTDoc(-0.1)" aria-label="Zoom out">−</button>
+        <span id="gstZoomLabel">100%</span>
+        <button class="zoom-btn" onclick="zoomGSTDoc(+0.1)" aria-label="Zoom in">+</button>
+        <button class="zoom-reset" onclick="zoomGSTReset()">Reset</button>
+      </div>
+
+    </div><!-- /#gstModal -->
+  </div><!-- /#gstOverlay -->
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════ -->
+  <script>
+    /* ── Mobile nav ── */
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+    function closeNav() {
+      document.getElementById('navLinks').classList.remove('open');
+      closeMega();
+    }
+
+    /* ── Mega Menu (Click-based) ── */
+    var megaParent = document.getElementById('megaParent');
+    var megaTrigger = document.getElementById('megaTrigger');
+    var megaOpen = false;
+
+    function openMega() {
+      megaParent.classList.add('mega-open');
+      megaTrigger.setAttribute('aria-expanded', 'true');
+      megaOpen = true;
+    }
+    
+    function closeMega() {
+      megaParent.classList.remove('mega-open');
+      megaTrigger.setAttribute('aria-expanded', 'false');
+      megaOpen = false;
+    }
+    
+    function closeMegaAndNav() {
+      closeMega();
+      closeNav();
+    }
+    
+    function toggleMega(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (megaOpen) {
+        closeMega();
+      } else {
+        openMega();
+      }
+    }
+    
+    // Open mega menu from hero "Explore Products" button
+    function openMegaFromHero() {
+      // Scroll to top smoothly so the menu is visible
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Small delay to ensure scroll completes
+      setTimeout(function() {
+        openMega();
+      }, 300);
+    }
+
+    // Close mega when clicking outside
+    document.addEventListener('click', function(e) {
+      var navLinks = document.getElementById('navLinks');
+      var megaMenu = document.getElementById('megaMenu');
+      
+      // If click is outside megaParent and mega is open, close it
+      if (megaOpen && !megaParent.contains(e.target)) {
+        closeMega();
+      }
+    });
+
+    // Close mega on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { 
+        closeMega(); 
+        closeMSMEModal(); 
+        closeGSTModal(); 
+      }
+    });
+
+    // Close mega when any link inside it is clicked
+    document.getElementById('megaMenu').querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() { 
+        closeMega(); 
+        closeNav(); 
+      });
+    });
+
+    /* ── MSME Modal ── */
+    let currentZoom = 1;
+    const ZOOM_MIN = 0.4, ZOOM_MAX = 2.2;
+
+    function openMSMEModal() {
+      document.getElementById('msmeOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      zoomReset();
+    }
+    function closeMSMEModal() {
+      document.getElementById('msmeOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('msmeOverlay')) closeMSMEModal();
+    }
+    function zoomDoc(delta) {
+      currentZoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, +(currentZoom + delta).toFixed(1)));
+      applyZoom();
+    }
+    function zoomReset() {
+      currentZoom = 1;
+      applyZoom();
+    }
+    function applyZoom() {
+      document.getElementById('msmeZoomWrap').style.transform = 'scale(' + currentZoom + ')';
+      document.getElementById('zoomLabel').textContent = Math.round(currentZoom * 100) + '%';
+    }
+
+    /* ── GST Modal ── */
+    let gstCurrentZoom = 1;
+    const GST_ZOOM_MIN = 0.4, GST_ZOOM_MAX = 2.2;
+
+    function openGSTModal() {
+      document.getElementById('gstOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      zoomGSTReset();
+    }
+    function closeGSTModal() {
+      document.getElementById('gstOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleGSTOverlayClick(e) {
+      if (e.target === document.getElementById('gstOverlay')) closeGSTModal();
+    }
+    function zoomGSTDoc(delta) {
+      gstCurrentZoom = Math.min(GST_ZOOM_MAX, Math.max(GST_ZOOM_MIN, +(gstCurrentZoom + delta).toFixed(1)));
+      applyGSTZoom();
+    }
+    function zoomGSTReset() {
+      gstCurrentZoom = 1;
+      applyGSTZoom();
+    }
+    function applyGSTZoom() {
+      document.getElementById('gstZoomWrap').style.transform = 'scale(' + gstCurrentZoom + ')';
+      document.getElementById('gstZoomLabel').textContent = Math.round(gstCurrentZoom * 100) + '%';
+    }
+
+    /* ── Product Slider ── */
+    var sliderCurrent = 0;
+    var sliderTotal = 3;
+    var sliderTimer = null;
+
+    function goToSlide(index) {
+      sliderCurrent = (index + sliderTotal) % sliderTotal;
+      document.getElementById('sliderTrack').style.transform = 'translateX(-' + (sliderCurrent * 100) + '%)';
+      var dots = document.querySelectorAll('.slider-dot');
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === sliderCurrent); });
+    }
+    function nextSlide() { goToSlide(sliderCurrent + 1); resetSliderTimer(); }
+    function prevSlide() { goToSlide(sliderCurrent - 1); resetSliderTimer(); }
+    function resetSliderTimer() {
+      clearInterval(sliderTimer);
+      sliderTimer = setInterval(function() { goToSlide(sliderCurrent + 1); }, 4000);
+    }
+    resetSliderTimer();
+  </script>
+
+</body>
+</html>
