@@ -65,9 +65,9 @@
       gap: 10px;
     }
     .nav-logo img {
-      height: 52px;
+      height: 48px;
       width: auto;
-      border-radius: 6px;
+      max-width: 200px;
       object-fit: contain;
     }
     .nav-logo-text {
@@ -206,6 +206,10 @@
     /* ── MOBILE NAVBAR ── */
     @media (max-width: 700px) {
       .navbar { padding: 0 18px; height: 56px; }
+      .nav-logo img {
+        height: 40px;
+        max-width: 160px;
+      }
       .nav-links {
         display: none;
         flex-direction: column;
@@ -1558,10 +1562,9 @@
        NAVBAR
   ═══════════════════════════════════════════ -->
   <nav class="navbar">
-    <div class="nav-logo">
-      <img src="device control logo.jpeg" alt="Device &amp; Controls Logo" onerror="this.style.display='none'" />
-      <div class="nav-logo-text">Device &amp; Controls</div>
-    </div>
+  <div class="nav-logo">
+    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-WFtbuRSnNZu7Dlue3NkXgxBHl5PUF1.png" alt="Device &amp; Controls Logo" />
+  </div>
     <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="3" y1="6" x2="21" y2="6"/>
@@ -2340,7 +2343,7 @@
     </div><!-- /#gstModal -->
   </div><!-- /#gstOverlay -->
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ══════════════════════════════���════════════
        JAVASCRIPT
   ═══════════════════════════════════════════ -->
   <script>
