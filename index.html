@@ -1755,7 +1755,7 @@
       </div>
     </div>
   </section>
-  <!-- ═════════════════════════════���═��═══════════
+  <!-- ═════════════════════════════�����═��═══════════
        WHY CHOOSE US
   ═══════════════════════════════════════════ -->
   <section class="section" id="why">
@@ -2367,15 +2367,9 @@
       megaTrigger.setAttribute('aria-expanded', 'false');
     }
     function toggleMega(e) {
-      // On mobile: toggle accordion; on desktop: just navigate to #brands
-      if (isMobile()) {
-        e.preventDefault();
-        megaParent.classList.contains('mega-open') ? closeMega() : openMega();
-      } else {
-        closeMega();
-        closeNav();
-        // allow default href="#brands" navigation
-      }
+      // Toggle menu on click for both mobile and desktop
+      e.preventDefault();
+      megaParent.classList.contains('mega-open') ? closeMega() : openMega();
     }
 
     /* ── Open Products Menu from Hero Button ── */
@@ -2393,18 +2387,11 @@
       }
     }
 
-    // Desktop hover
-    megaParent.addEventListener('mouseenter', function() {
-      if (!isMobile()) openMega();
-    });
-    megaParent.addEventListener('mouseleave', function() {
-      if (!isMobile()) closeMega();
-    });
-
-    // Close mega when clicking outside
+    // Close mega when clicking outside (click-based only, no hover)
     document.addEventListener('click', function(e) {
       var heroBtn = document.getElementById('heroExploreBtn');
       if (heroBtn && heroBtn.contains(e.target)) return; // Don't close if clicking hero button
+      if (megaTrigger.contains(e.target)) return; // Don't close if clicking the PRODUCTS trigger
       if (!megaParent.contains(e.target) && !document.getElementById('navLinks').contains(e.target)) {
         closeMega();
       }
