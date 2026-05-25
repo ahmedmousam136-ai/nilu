@@ -677,6 +677,81 @@
     .why-card h3 { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
     .why-card p { font-size: 0.8rem; color: rgba(255,255,255,0.62); line-height: 1.65; }
 
+    /* Why Choose Us Images Grid */
+    .why-images-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .why-img-frame {
+      position: relative;
+      border-radius: 12px;
+      overflow: visible;
+      background: var(--white);
+      padding: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .why-img-frame::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: -12px;
+      right: 12px; bottom: 12px;
+      border: 2px solid rgba(245,166,35,0.35);
+      border-radius: 10px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .why-img-frame::after {
+      content: '';
+      position: absolute;
+      top: 12px; left: 12px;
+      right: -12px; bottom: -12px;
+      background: rgba(245,166,35,0.07);
+      border-radius: 10px;
+      z-index: 0;
+    }
+    .why-img-frame img {
+      width: 100%;
+      height: 220px;
+      border-radius: 8px;
+      display: block;
+      position: relative;
+      z-index: 1;
+      object-fit: cover;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    }
+    .why-img-tag {
+      position: absolute;
+      bottom: -14px;
+      right: 8px;
+      z-index: 2;
+      background: var(--orange);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 4px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+    }
+    @media (max-width: 900px) {
+      .why-images-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+    }
+    @media (max-width: 560px) {
+      .why-images-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 320px;
+        margin: 40px auto 0;
+      }
+    }
+
     /* ═══════════════════════════════════════════
        CONTACT SECTION
     ═══════════════════════════════════════════ */
@@ -1391,7 +1466,7 @@
     }
     .zoom-reset:hover { background: var(--navy); color: #fff; }
 
-    /* ═══════════════════════════��═══════════════
+    /* ═══════════════════════════���═══════════════
        INDUSTRIES WE SERVE
     ═══════════════════════════════════════════ */
     #industries {
@@ -1758,7 +1833,7 @@
       </div>
     </div>
   </section>
-  <!-- ═════════════════════════════�����═��═══════════
+  <!-- ════════════════��════════════�����═��═══════════
        WHY CHOOSE US
   ═══════════════════════════════════════════ -->
   <section class="section" id="why">
@@ -1818,11 +1893,20 @@
           </div>
         </div>
       </div>
-      <div style="display:flex; justify-content:center; margin-top:32px;">
-        <div style="position:relative; display:inline-block; max-width:400px; width:100%; background:linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1a2d 100%); border-radius:16px; padding:24px; box-shadow:var(--shadow); border:2px solid rgba(255,165,0,0.4);">
-          <div style="position:absolute; inset:8px; border:1px solid rgba(255,180,50,0.3); border-radius:12px; pointer-events:none;"></div>
-          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5syPxo09EZEPK108irJOvEgKyYhS7f.png" alt="Industrial Proximity Sensors" style="width:100%; height:auto; border-radius:8px; filter:drop-shadow(0 0 20px rgba(255,200,100,0.15));">
-          <div style="position:absolute; bottom:16px; right:16px; background:linear-gradient(90deg, #ff8c00, #ffa500); color:#fff; font-size:0.7rem; font-weight:700; padding:6px 14px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; box-shadow:0 2px 8px rgba(255,140,0,0.4);">Industrial-Grade Sensors</div>
+
+      <!-- Image Grid -->
+      <div class="why-images-grid">
+        <div class="why-img-frame">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MJ55dkc9NTopVN2B5iTmpYwVcaraMZ.png" alt="Industrial Proximity Sensors" />
+          <div class="why-img-tag">Proximity Sensors</div>
+        </div>
+        <div class="why-img-frame">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-IRWDsa1VNmrZ0Pp9uuhDBBLhgH5gAa.png" alt="Industrial Electric Motor" />
+          <div class="why-img-tag">Electric Motors</div>
+        </div>
+        <div class="why-img-frame">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-VvzUASXKHanruZ9jFeEL4AbCvaqiA0.png" alt="Safety Scanner Device" />
+          <div class="why-img-tag">Safety Scanners</div>
         </div>
       </div>
     </div>
