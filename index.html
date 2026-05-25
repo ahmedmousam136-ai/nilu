@@ -1656,7 +1656,7 @@
           delivered fast across India.
         </p>
         <div class="hero-ctas">
-          <button class="btn-primary" onclick="openProductsMenu(event)" type="button">Explore Products</button>
+          <button class="btn-primary" id="heroExploreBtn" onclick="openProductsMenu(event)" type="button">Explore Products</button>
           <a href="#contact" class="btn-outline">Get a Quote</a>
         </div>
         <button class="msme-badge-trigger" onclick="openMSMEModal()" aria-label="View MSME Certificate">
@@ -1832,7 +1832,7 @@
         <!-- Left: image -->
         <div class="industries-img-frame">
           <img
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-hC3whrAqjx8BOb1brupZ7XAj9rKSq4.png"
             alt="Industrial Relay & Control Equipment"
           />
           <div class="industries-img-tag">Industrial-Grade Equipment</div>
@@ -2396,6 +2396,8 @@
 
     // Close mega when clicking outside
     document.addEventListener('click', function(e) {
+      var heroBtn = document.getElementById('heroExploreBtn');
+      if (heroBtn && heroBtn.contains(e.target)) return; // Don't close if clicking hero button
       if (!megaParent.contains(e.target) && !document.getElementById('navLinks').contains(e.target)) {
         closeMega();
       }
